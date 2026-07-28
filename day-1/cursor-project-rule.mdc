@@ -1,0 +1,92 @@
+---
+description: AI Engineering Playbook Repository Standards
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# AI Engineering Playbook
+
+This repository is a structured knowledge base for learning AI Engineering.
+
+## Goal
+
+Produce high-quality, well-structured learning notes that are technically correct and easy to revise later.
+
+## Repository Standards
+
+Every topic should include:
+
+- Definition
+- Why it exists
+- Internal working
+- Architecture
+- Workflow
+- Real-world examples
+- Advantages
+- Limitations
+- Best Practices
+- Common Mistakes
+- Comparison with similar concepts
+- Resources
+
+## Writing Style
+
+- Use Markdown.
+- Use proper headings.
+- Use bullet points where appropriate.
+- Explain concepts from beginner to advanced.
+- Include diagrams using Markdown if useful.
+- Avoid unnecessary repetition.
+
+## Code Standards
+
+All code examples should:
+
+- Compile correctly.
+- Follow best practices.
+- Include short explanations.
+- Be production-quality where practical.
+
+## Examples
+
+Every concept should include:
+
+- One simple example.
+- One practical real-world example.
+- One advanced example.
+
+## Comparisons
+
+Whenever possible compare with related concepts.
+
+Example:
+
+- Rules vs Skills
+- MCP vs API
+- Agent vs Workflow
+- RAG vs Fine-tuning
+
+## Learning Structure
+
+Every note should follow:
+
+1. What is it?
+2. Why does it exist?
+3. How does it work?
+4. Architecture
+5. Workflow
+6. Example
+7. Best Practices
+8. Common Mistakes
+9. Summary
+
+## Quality Checklist
+
+Before finishing, verify:
+
+- Is the explanation correct?
+- Is it beginner-friendly?
+- Are examples included?
+- Are best practices included?
+- Are comparisons included?
