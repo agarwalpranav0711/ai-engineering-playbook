@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Picker App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ═══════════════════════════════════════════
+           CSS Custom Properties (Design Tokens)
+           ═══════════════════════════════════════════ */
+        :root {
+            --color-bg: #f0f2f5;
+            --color-surface: #ffffff;
+            --color-surface-hover: #f8f9fb;
+            --color-primary: #6366f1;
+            --color-primary-hover: #4f46e5;
+            --color-primary-light: #eef2ff;
+            --color-text: #1e293b;
+            --color-text-secondary: #64748b;
+            --color-text-muted: #94a3b8;
+            --color-border: #e2e8f0;
+            --color-success: #22c55e;
+            --color-danger: #ef4444;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* ═══════════════════════════════════════════
+           Reset & Base Styles
+           ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            line-height: 1.6;
+            /* Background color is set dynamically by JavaScript */
+            transition: background-color var(--transition);
+        }
+
+        /* ═══════════════════════════════════════════
+           Card Container
+           ═══════════════════════════════════════════ */
+        .app {
+            width: 100%;
+            max-width: 480px;
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .app:hover {
+            box-shadow: 0 16px 24px -4px rgba(0, 0, 0, 0.12), 0 8px 12px -6px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ═══════════════════════════════════════════
+           Header
+           ═══════════════════════════════════════════ */
+        .app-header {
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .app-header h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .app-header p {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* ═══════════════════════════════════════════
+           Live Preview Box
+           ═══════════════════════════════════════════ */
+        .preview {
+            width: 100%;
+            height: 180px;
+            border-radius: var(--radius-sm);
+            background: var(--color-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition), box-shadow var(--transition);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview::after {
+            content: 'Live Preview';
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ═══════════════════════════════════════════
+           Color Picker Input
+           ═══════════════════════════════════════════ */
+        .picker-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .picker-section label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--color-border);
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .color-picker-wrapper:focus-within {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+            background: none;
+            padding: 2px;
+            transition: border-color var(--transition), transform var(--transition);
+            flex-shrink: 0;
+        }
+
+        input[type="color"]:hover {
+            transform: scale(1.05);
+        }
+
+        input[type="color"]:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Customize the color input's internal swatch */
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        input[type="color"]::-moz-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        .color-picker-wrapper .selected-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+        }
+
+        /* ═══════════════════════════════════════════
+           Color Code Display Cards
+           ═══════════════════════════════════════════ */
+        .codes {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+            transition: border-color var(--transition), background var(--transition);
+        }
+
+        .code-card:hover {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+        }
+
+        .code-card .label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            min-width: 40px;
+        }
+
+        .code-card .value {
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            color: var(--color-text);
+            letter-spacing: 0.02em;
+            user-select: all;
+        }
+
+        .code-card .copy-btn {
+            padding: 0.4rem 0.85rem;
+            background: var(--color-surface);
+            color: var(--color-text-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xs);
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+            white-space: nowrap;
+        }
+
+        .code-card .copy-btn:hover {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+            transform: translateY(-1px);
+        }
+
+        .code-card .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .code-card .copy-btn:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .code-card .copy-btn.copied {
+            background: var(--color-success);
+            color: #fff;
+            border-color: var(--color-success);
+        }
+
+        /* ═══════════════════════════════════════════
+           Action Buttons
+           ═══════════════════════════════════════════ */
+        .actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .actions button {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+        }
+
+        .actions button:active {
+            transform: scale(0.97);
+        }
+
+        .actions button:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .btn-reset {
+            background: var(--color-bg);
+            color: var(--color-text-secondary);
+            border: 1px solid var(--color-border) !important;
+        }
+
+        .btn-reset:hover {
+            background: var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn-random {
+            background: linear-gradient(135deg, var(--color-primary), #a855f7);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-random:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* ═══════════════════════════════════════════
+           Toast Notification
+           ═══════════════════════════════════════════ */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--color-text);
+            color: #fff;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: var(--font);
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transition: opacity 300ms ease, transform 300ms ease;
+            pointer-events: none;
+            z-index: 100;
+            max-width: 90vw;
+            text-align: center;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ═══════════════════════════════════════════
+           Responsive Design
+           ═══════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .app {
+                padding: 1.25rem;
+                border-radius: var(--radius-sm);
+            }
+
+            .preview {
+                height: 140px;
+            }
+
+            .code-card {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .code-card .value {
+                font-size: 0.85rem;
+                flex: 1;
+                text-align: center;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .color-picker-wrapper {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           Accessibility: Reduced Motion
+           ═══════════════════════════════════════════ */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           Accessibility: Screen Reader Only
+           ═══════════════════════════════════════════ */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         Main Application
+         ═══════════════════════════════════════════ -->
+    <main class="app" role="main" aria-label="Color Picker Application">
+
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Color Picker</h1>
+            <p>Pick a color and preview it live</p>
+        </header>
+
+        <!-- Live Preview Box -->
+        <div class="preview" id="preview" role="img" aria-label="Live color preview" style="background-color: #6366f1;"></div>
+
+        <!-- Color Picker Input -->
+        <section class="picker-section" aria-label="Color picker">
+            <label for="colorPicker">Choose a color</label>
+            <div class="color-picker-wrapper">
+                <input type="color" id="colorPicker" value="#6366f1" aria-describedby="colorValue" />
+                <span class="selected-label" id="colorValue">Selected color</span>
+            </div>
+        </section>
+
+        <!-- Color Code Display Cards -->
+        <section class="codes" aria-label="Color codes">
+            <!-- HEX Code -->
+            <div class="code-card" role="group" aria-label="HEX color code">
+                <span class="label">HEX</span>
+                <span class="value" id="hexValue">#6366f1</span>
+                <button class="copy-btn" id="copyHexBtn" aria-label="Copy HEX color code to clipboard">Copy HEX</button>
+            </div>
+
+            <!-- RGB Code -->
+            <div class="code-card" role="group" aria-label="RGB color code">
+                <span class="label">RGB</span>
+                <span class="value" id="rgbValue">rgb(99, 102, 241)</span>
+                <button class="copy-btn" id="copyRgbBtn" aria-label="Copy RGB color code to clipboard">Copy RGB</button>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="actions" role="group" aria-label="Color actions">
+            <button class="btn-reset" id="resetBtn" aria-label="Reset to default color">Reset</button>
+            <button class="btn-random" id="randomBtn" aria-label="Generate a random color">Random</button>
+        </div>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+    <!-- ═══════════════════════════════════════════
+         JavaScript
+         ═══════════════════════════════════════════ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ─── Constants ────────────────────────────────────────────
+            const DEFAULT_COLOR = '#6366f1';
+
+            // ─── DOM References ───────────────────────────────────────
+            const colorPicker = document.getElementById('colorPicker');
+            const preview = document.getElementById('preview');
+            const hexValue = document.getElementById('hexValue');
+            const rgbValue = document.getElementById('rgbValue');
+            const copyHexBtn = document.getElementById('copyHexBtn');
+            const copyRgbBtn = document.getElementById('copyRgbBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const randomBtn = document.getElementById('randomBtn');
+            const toast = document.getElementById('toast');
+            const colorLabel = document.getElementById('colorValue');
+
+            let toastTimer = null;
+
+            // ─── Utility Functions ────────────────────────────────────
+
+            /**
+             * Convert a HEX color string to an RGB object.
+             * @param {string} hex - The HEX color string (e.g., "#6366f1")
+             * @returns {{ r: number, g: number, b: number }} RGB values (0-255)
+             */
+            function hexToRgb(hex) {
+                // Remove the '#' if present
+                const cleanHex = hex.replace('#', '');
+                // Parse the red, green, and blue components
+                const r = parseInt(cleanHex.substring(0, 2), 16);
+                const g = parseInt(cleanHex.substring(2, 4), 16);
+                const b = parseInt(cleanHex.substring(4, 6), 16);
+                return { r, g, b };
+            }
+
+            /**
+             * Generate a random HEX color string.
+             * @returns {string} A random HEX color (e.g., "#a3b4c5")
+             */
+            function getRandomColor() {
+                const randomInt = Math.floor(Math.random() * 16777215);
+                return '#' + randomInt.toString(16).padStart(6, '0');
+            }
+
+            /**
+             * Show a toast notification to the user.
+             * @param {string} message - The message to display
+             * @param {number} [duration=2000] - How long to show the toast (ms)
+             */
+            function showToast(message, duration) {
+                duration = duration || 2000;
+                toast.textContent = message;
+                toast.classList.add('visible');
+
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(function() {
+                    toast.classList.remove('visible');
+                }, duration);
+            }
+
+            /**
+             * Copy text to the clipboard using the modern Clipboard API.
+             * Falls back gracefully if the API is unavailable.
+             * @param {string} text - The text to copy
+             * @param {HTMLElement} btn - The button that was clicked (for visual feedback)
+             * @param {string} label - Label for the toast message
+             */
+            function copyToClipboard(text, btn, label) {
+                if (!navigator.clipboard) {
+                    showToast('Clipboard API not available. Please copy manually.');
+                    return;
+                }
+
+                navigator.clipboard.writeText(text).then(function() {
+                    // Visual feedback on the button
+                    btn.classList.add('copied');
+                    var originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+
+                    setTimeout(function() {
+                        btn.classList.remove('copied');
+                        btn.textContent = originalText;
+                    }, 1500);
+
+                    showToast(label + ' copied to clipboard!');
+                }).catch(function() {
+                    showToast('Failed to copy. Please copy manually.');
+                });
+            }
+
+            // ─── Core Update Function ─────────────────────────────────
+
+            /**
+             * Update the entire UI to reflect the selected color.
+             * This is the single source of truth for all UI updates.
+             * @param {string} hex - The HEX color string
+             */
+            function updateColor(hex) {
+                // Ensure the hex has a '#' prefix
+                if (hex.charAt(0) !== '#') {
+                    hex = '#' + hex;
+                }
+
+                // Update the color picker input
+                colorPicker.value = hex;
+
+                // Update the live preview background
+                preview.style.backgroundColor = hex;
+
+                // Update the HEX display
+                hexValue.textContent = hex.toUpperCase();
+
+                // Convert to RGB and update the RGB display
+                var rgb = hexToRgb(hex);
+                var rgbString = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+                rgbValue.textContent = rgbString;
+
+                // Update the body background (subtle tint)
+                document.body.style.backgroundColor = hex + '20'; // 20 = ~12% opacity
+
+                // Update the accessible label
+                colorLabel.textContent = hex.toUpperCase() + ' selected';
+            }
+
+            // ─── Event Handlers ───────────────────────────────────────
+
+            // Color Picker: Live update as user drags the picker
+            colorPicker.addEventListener('input', function() {
+                updateColor(this.value);
+            });
+
+            // Copy HEX Button
+            copyHexBtn.addEventListener('click', function() {
+                var hex = hexValue.textContent;
+                copyToClipboard(hex, this, 'HEX code');
+            });
+
+            // Copy RGB Button
+            copyRgbBtn.addEventListener('click', function() {
+                var rgb = rgbValue.textContent;
+                copyToClipboard(rgb, this, 'RGB code');
+            });
+
+            // Reset Button: Restore the default color
+            resetBtn.addEventListener('click', function() {
+                updateColor(DEFAULT_COLOR);
+                showToast('Reset to default color');
+            });
+
+            // Random Button: Generate a random color
+            randomBtn.addEventListener('click', function() {
+                var randomHex = getRandomColor();
+                updateColor(randomHex);
+                showToast('Random color generated!');
+            });
+
+            // ─── Initialization ───────────────────────────────────────
+
+            // Set the initial color on page load
+            updateColor(DEFAULT_COLOR);
+
+        })();
+    </script>
+</body>
+</html>
