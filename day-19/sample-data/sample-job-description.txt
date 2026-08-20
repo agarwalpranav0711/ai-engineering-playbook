@@ -1,0 +1,21 @@
+Frontend Developer Intern / Junior Developer
+
+About the Role:
+We are seeking a motivated Frontend Developer Intern with strong skills in modern web development frameworks.
+
+Requirements:
+- Strong proficiency in React and JavaScript / TypeScript
+- Experience building responsive web applications using CSS/Tailwind CSS
+- Hands-on experience integrating REST APIs
+- Familiarity with Git version control
+- Good understanding of containerization (Docker) is a plus
+
+Preferred Skills:
+- Experience with FastAPI or Node.js backend integration
+- TypeScript evidence in production or personal projects
+- AWS or Cloud deployment knowledge
+
+Responsibilities:
+- Write clean, maintainable, and well-tested React components.
+- Collaborate with backend engineers to integrate APIs.
+- Optimize frontend web performance and mobile responsiveness.

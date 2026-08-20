@@ -1,0 +1,26 @@
+Pranav Agarwal
+Email: pranav@example.com | Phone: +1-555-0199 | GitHub: github.com/pranav | LinkedIn: linkedin.com/in/pranav
+
+EDUCATION
+B.Tech in Computer Science & Engineering | CPI: 8.8/10.0 (2022 - 2026)
+
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, Python, C++, HTML5, CSS3, SQL
+Frameworks & Libraries: React, Node.js, Express.js, FastAPI, Tailwind CSS, Redux Toolkit
+Tools & Platforms: Git, GitHub, Docker, REST APIs, Supabase, Vercel, Postman
+
+EXPERIENCE
+Frontend Developer Intern | TechFlow Solutions (May 2024 - July 2024)
+- Developed responsive web interfaces using React, TypeScript, and Tailwind CSS, improving user engagement by 25%.
+- Integrated RESTful APIs with Node.js backend, reducing client-side data fetching latency by 30%.
+- Utilized Git for version control and collaborated with a team of 4 engineers using Agile methodologies.
+
+PROJECTS
+Spotify Clone Web Application
+- Built a full-stack music streaming web application using React, Tailwind CSS, and REST APIs.
+- Implemented state management using Redux Toolkit and audio playback controls.
+- Containerized application frontend using Docker and deployed on Vercel.
+
+AI Resume & Document Reviewer
+- Engineered an automated resume analysis agent using Python, FastAPI, and Pydantic for structured validation.
+- Extracted PDF resume content and evaluated skill alignment against job descriptions with 95% accuracy.

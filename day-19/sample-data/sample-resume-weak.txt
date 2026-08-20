@@ -1,0 +1,13 @@
+Pranav
+Student
+
+Skills:
+HTML, CSS, JavaScript, Git
+
+Projects:
+- Worked on website
+- Created a simple todo app using HTML and CSS
+- Made a simple script
+
+Experience:
+- Helped friends with coding projects
