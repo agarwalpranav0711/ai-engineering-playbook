@@ -1,0 +1,19 @@
+AI Engineering & Architecture Handbook (Day 1 - Day 20)
+
+CHAPTER 1: INTRODUCTION TO RETRIEVAL-AUGMENTED GENERATION (RAG)
+Retrieval-Augmented Generation (RAG) is an advanced AI architecture that combines information retrieval with text generation. Instead of relying solely on the pre-trained knowledge stored inside a Large Language Model (LLM), RAG dynamically fetches relevant text chunks from an external vector store or knowledge database based on the user's specific query.
+
+RAG solves three critical challenges in modern AI systems:
+1. Hallucination Reduction: By grounding answers directly in retrieved document context, the LLM is prevented from inventing non-existent facts.
+2. Domain Knowledge Integration: Custom proprietary documents, private APIs, and internal company guidelines can be queried without expensive model fine-tuning.
+3. Source Attribution & Transparency: Every AI answer can provide explicit source citations (such as page numbers and paragraph snippets) so users can verify the information.
+
+CHAPTER 2: CHUNKING, EMBEDDINGS, AND VECTOR DATABASES
+The RAG ingestion pipeline consists of four fundamental steps:
+1. Document Text Extraction: Parsing text from PDFs, Markdown, or HTML documents while preserving page number markers.
+2. Text Chunking: Splitting large documents into smaller, coherent text chunks (typically 500 to 1000 characters) with overlapping windows (e.g. 100 characters) to preserve contextual boundaries.
+3. Embedding Generation: Converting text chunks into high-dimensional numerical vectors that capture semantic meaning.
+4. Vector Storage & Similarity Search: Storing vectors in a vector database like ChromaDB. When a user asks a question, cosine similarity search retrieves the top-K most relevant chunks.
+
+CHAPTER 3: MULTI-AGENT SYSTEMS & AUTOGEN
+Multi-Agent collaboration enables complex problem-solving by assigning distinct roles to specialized agents. For example, AutoGen and CrewAI allow agents such as a Resume Analyst, Job Matcher, and Critic to converse and iteratively refine outputs before producing a final validated decision.
