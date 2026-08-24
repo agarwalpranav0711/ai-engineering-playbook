@@ -1,0 +1,10 @@
+{
+  "email_type": "academic",
+  "recipient": "Professor Sharma",
+  "purpose": "Request a 2-day extension on Assignment 3",
+  "context": "I have been unwell with a severe fever over the past two days and need two extra days to complete the implementation and report properly.",
+  "tone": "professional",
+  "length": "medium",
+  "sender_name": "Pranav",
+  "sender_role": "Computer Science Student"
+}

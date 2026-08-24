@@ -1,0 +1,10 @@
+{
+  "email_type": "job_application",
+  "recipient": "Hiring Manager",
+  "purpose": "Follow up after software engineering interview",
+  "context": "I interviewed for the Software Engineering Intern position last Friday. I enjoyed discussing the team's distributed systems architecture and want to check on next steps.",
+  "tone": "confident",
+  "length": "medium",
+  "sender_name": "Pranav",
+  "sender_role": "Software Developer Candidate"
+}

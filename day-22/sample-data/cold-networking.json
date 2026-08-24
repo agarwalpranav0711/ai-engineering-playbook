@@ -1,0 +1,10 @@
+{
+  "email_type": "networking",
+  "recipient": "Senior AI Engineer",
+  "purpose": "Request a 15-minute virtual coffee chat for career advice",
+  "context": "I read your recent open-source work on RAG pipelines and Pydantic validation. I am a 3rd-year CS student pursuing AI Engineering and would love to ask 2-3 questions about your career transition.",
+  "tone": "friendly",
+  "length": "short",
+  "sender_name": "Pranav",
+  "sender_role": "AI Engineering Student"
+}
