@@ -1,7 +1,0 @@
-Rahul: Welcome to today's daily standup! Pranav, what did you work on yesterday?
-
-Pranav: Yesterday I completed the Day 22 AI Email Writer with tone controls and Pydantic validation. Today I'm working on the Day 23 AI Meeting Summarizer. No blockers on my end.
-
-Kriti: Yesterday I reviewed the React 19 UI components. Today I am optimizing Tailwind CSS v4 styling. Blocker: Waiting for final backend API endpoints to test integration.
-
-Rahul: I'll help test the API endpoints with Kriti by end of day.
