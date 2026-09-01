@@ -1,0 +1,1 @@
+Tomorrow I need to finish the authentication module and then test the API. I also need to ask Rahul about the deployment credentials.
