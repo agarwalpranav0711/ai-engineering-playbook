@@ -1,0 +1,60 @@
+{
+  "id": "workflow-email",
+  "name": "4. Email Generator Workflow",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "input",
+      "position": { "x": 100, "y": 150 },
+      "data": {
+        "label": "Input: Email Context",
+        "name": "message",
+        "value": "Project deadline extension requested due to unexpected API integration testing delay."
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "prompt",
+      "position": { "x": 400, "y": 150 },
+      "data": {
+        "label": "Email Formatting Prompt",
+        "template": "Write a courteous and professional email requesting a 2-day deadline extension based on the situation:\n\n{{message}}"
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "ai",
+      "position": { "x": 700, "y": 150 },
+      "data": {
+        "label": "AI Email Model",
+        "model": "openai/gpt-4o-mini",
+        "temperature": 0.5
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "output",
+      "position": { "x": 1000, "y": 150 },
+      "data": {
+        "label": "Final Drafted Email"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1-2",
+      "source": "node-1",
+      "target": "node-2"
+    },
+    {
+      "id": "edge-2-3",
+      "source": "node-2",
+      "target": "node-3"
+    },
+    {
+      "id": "edge-3-4",
+      "source": "node-3",
+      "target": "node-4"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "workflow-summarizer",
+  "name": "2. Summarizer Workflow",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "input",
+      "position": { "x": 100, "y": 150 },
+      "data": {
+        "label": "Input: Long Article",
+        "name": "text",
+        "value": "Visual AI workflow builders allow developers and non-coders to visually compose complex AI applications using node-based graphs. Instead of hardcoding prompt pipelines in monolithic scripts, each node represents an isolated operation such as user input, prompt formatting, LLM inference, vector retrieval, or data formatting."
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "prompt",
+      "position": { "x": 400, "y": 150 },
+      "data": {
+        "label": "Summarization Prompt",
+        "template": "Summarize the following text into 3 concise bullet points:\n\n{{text}}"
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "ai",
+      "position": { "x": 700, "y": 150 },
+      "data": {
+        "label": "AI Summarizer Model",
+        "model": "anthropic/claude-3.5-sonnet",
+        "temperature": 0.3
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "output",
+      "position": { "x": 1000, "y": 150 },
+      "data": {
+        "label": "Summary Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1-2",
+      "source": "node-1",
+      "target": "node-2"
+    },
+    {
+      "id": "edge-2-3",
+      "source": "node-2",
+      "target": "node-3"
+    },
+    {
+      "id": "edge-3-4",
+      "source": "node-3",
+      "target": "node-4"
+    }
+  ]
+}

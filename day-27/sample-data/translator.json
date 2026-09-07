@@ -1,0 +1,60 @@
+{
+  "id": "workflow-translator",
+  "name": "3. Translator Workflow",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "input",
+      "position": { "x": 100, "y": 150 },
+      "data": {
+        "label": "Input: Source Text",
+        "name": "text",
+        "value": "Artificial Intelligence workflows orchestrate visual node graphs to execute complex multi-step reasoning."
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "prompt",
+      "position": { "x": 400, "y": 150 },
+      "data": {
+        "label": "Translation Prompt",
+        "template": "Translate the following text into fluent Hindi:\n\n{{text}}"
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "ai",
+      "position": { "x": 700, "y": 150 },
+      "data": {
+        "label": "AI Translator Model",
+        "model": "google/gemini-2.5-flash",
+        "temperature": 0.2
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "output",
+      "position": { "x": 1000, "y": 150 },
+      "data": {
+        "label": "Translated Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1-2",
+      "source": "node-1",
+      "target": "node-2"
+    },
+    {
+      "id": "edge-2-3",
+      "source": "node-2",
+      "target": "node-3"
+    },
+    {
+      "id": "edge-3-4",
+      "source": "node-3",
+      "target": "node-4"
+    }
+  ]
+}

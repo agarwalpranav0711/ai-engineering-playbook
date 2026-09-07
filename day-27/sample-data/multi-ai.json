@@ -1,0 +1,89 @@
+{
+  "id": "workflow-multi-ai",
+  "name": "5. Multi-AI Pipeline (Refiner Workflow)",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "input",
+      "position": { "x": 50, "y": 150 },
+      "data": {
+        "label": "Input: Concept",
+        "name": "topic",
+        "value": "Quantum Computing Basics"
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "prompt",
+      "position": { "x": 300, "y": 150 },
+      "data": {
+        "label": "Prompt 1: Draft Generation",
+        "template": "Write a rough 2-paragraph draft explaining {{topic}}."
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "ai",
+      "position": { "x": 550, "y": 150 },
+      "data": {
+        "label": "AI 1: Initial Drafter",
+        "model": "openai/gpt-4o-mini",
+        "temperature": 0.7
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "prompt",
+      "position": { "x": 800, "y": 150 },
+      "data": {
+        "label": "Prompt 2: Refinement Template",
+        "template": "Improve the following explanation to make it crystal clear, compelling, and add 2 key takeaways:\n\n{{last_output}}"
+      }
+    },
+    {
+      "id": "node-5",
+      "type": "ai",
+      "position": { "x": 1050, "y": 150 },
+      "data": {
+        "label": "AI 2: Polisher & Refiner",
+        "model": "anthropic/claude-3.5-sonnet",
+        "temperature": 0.3
+      }
+    },
+    {
+      "id": "node-6",
+      "type": "output",
+      "position": { "x": 1300, "y": 150 },
+      "data": {
+        "label": "Final Refined Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1-2",
+      "source": "node-1",
+      "target": "node-2"
+    },
+    {
+      "id": "edge-2-3",
+      "source": "node-2",
+      "target": "node-3"
+    },
+    {
+      "id": "edge-3-4",
+      "source": "node-3",
+      "target": "node-4"
+    },
+    {
+      "id": "edge-4-5",
+      "source": "node-4",
+      "target": "node-5"
+    },
+    {
+      "id": "edge-5-6",
+      "source": "node-5",
+      "target": "node-6"
+    }
+  ]
+}

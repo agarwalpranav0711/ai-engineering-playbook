@@ -1,0 +1,60 @@
+{
+  "id": "workflow-basic",
+  "name": "1. Basic Workflow",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "input",
+      "position": { "x": 100, "y": 150 },
+      "data": {
+        "label": "Input: Topic",
+        "name": "topic",
+        "value": "AI Engineering"
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "prompt",
+      "position": { "x": 400, "y": 150 },
+      "data": {
+        "label": "Prompt Generator",
+        "template": "Write a short 2-sentence explanation about {{topic}}."
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "ai",
+      "position": { "x": 700, "y": 150 },
+      "data": {
+        "label": "AI Model (GPT-4o-mini)",
+        "model": "openai/gpt-4o-mini",
+        "temperature": 0.7
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "output",
+      "position": { "x": 1000, "y": 150 },
+      "data": {
+        "label": "Final Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1-2",
+      "source": "node-1",
+      "target": "node-2"
+    },
+    {
+      "id": "edge-2-3",
+      "source": "node-2",
+      "target": "node-3"
+    },
+    {
+      "id": "edge-3-4",
+      "source": "node-3",
+      "target": "node-4"
+    }
+  ]
+}
