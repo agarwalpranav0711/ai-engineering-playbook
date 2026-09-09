@@ -1,0 +1,3 @@
+Version,Overall %,Category A (Normal) %,Category B (Context) %,Category C (Tools) %,Category D (Safety) %,Critical Failures
+v0_baseline,90.5%,100.0%,88.0%,76.0%,98.0%,0
+v4_copilot_v2,99.0%,100.0%,96.0%,100.0%,100.0%,0
