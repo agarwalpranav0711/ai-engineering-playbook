@@ -173,7 +173,7 @@ This section is updated with the checks actually run in this workspace. The live
 - Local `.venv`: **created and verified**.
 - Installed direct dependencies: OpenAI **2.54.0**, Playwright **1.63.0**, `python-dotenv` **1.2.4**, and pytest **8.4.2**; `pip check` reported no broken requirements.
 - Playwright Chromium: **installed**.
-- Python compilation: **passed**. Offline tests: **18 passed**.
+- Python compilation: **passed**. Offline tests: **19 passed**.
 - Browser-only smoke test: Playwright navigated to `https://example.com/`; the observed title was **Example Domain**. This did not use a model.
 - Live model/browser experiment: **not run**. No `OPENAI_API_KEY` or `OPENAI_MODEL` environment variable is configured, and no local `.env` exists.
 
