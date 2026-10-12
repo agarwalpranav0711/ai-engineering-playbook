@@ -254,3 +254,38 @@ def test_browser_resources_are_closed_after_exception(
         with browser_session():
             raise RuntimeError("simulated model failure")
     assert closed == ["context", "browser"]
+
+
+def test_browser_closes_if_context_creation_fails(
+        monkeypatch: pytest.MonkeyPatch,
+) -> None:
+        import browser_tools as module
+
+        closed: list[str] = []
+
+        class FakeBrowser:
+            def new_context(self, **_: Any) -> Any:
+                raise RuntimeError("simulated context creation failure")
+
+            def close(self) -> None:
+                closed.append("browser")
+
+        class FakeChromium:
+            def launch(self, **_: Any) -> FakeBrowser:
+                return FakeBrowser()
+
+        class FakePlaywright:
+            chromium = FakeChromium()
+
+        class FakePlaywrightManager:
+            def __enter__(self) -> FakePlaywright:
+                return FakePlaywright()
+
+            def __exit__(self, *_: Any) -> None:
+                pass
+
+        monkeypatch.setattr(module, "sync_playwright", FakePlaywrightManager)
+        with pytest.raises(RuntimeError, match="simulated context creation failure"):
+            with browser_session():
+                pass
+        assert closed == ["browser"]
